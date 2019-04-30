@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "express": "^4.16.4",
     "fast-speedtest-api": "^0.3.2",
     "moment": "^2.24.0",
