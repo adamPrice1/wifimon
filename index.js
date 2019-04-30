@@ -7,28 +7,27 @@ const path = require('path');
 const moment = require('moment');
 
 const myspeed = require('./myspeed')
-const fast = require('./fastSpeedtest')
+const fast = require('./fastSpeedTest')
 const speedTest = require('./speedtestdotnet')
 
 var app = express();
 
 
 app.use(express.static(path.join(__dirname, 'wifimon/build')));
-app.use(express.static(path.join(__dirname, 'wifimon/public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
 
 function removeOldTime(fname){
-  let file = JSON.parse(fs.readFileSync('./wifimon/public/'+fname));
+  let file = JSON.parse(fs.readFileSync('./wifimon/build/'+fname));
 
   file.forEach(function(val,index){
     if(moment(val.time).isBefore(moment().subtract(30,"days"))){
       file.splice(index,1);
     }
   })
-  fs.writeFileSync('./wifimon/public/'+fname, JSON.stringify(file));
+  fs.writeFileSync('./wifimon/build/'+fname, JSON.stringify(file));
 }
 
 app.listen(process.env.PORT || 8000, function() {
@@ -37,20 +36,20 @@ app.listen(process.env.PORT || 8000, function() {
 
 schedule.scheduleJob('0 * * * *', function(){
   myspeed().then(function(result){
-    let myspeeds = JSON.parse(fs.readFileSync('./wifimon/public/myspeeds.json'));
+    let myspeeds = JSON.parse(fs.readFileSync('./wifimon/build/myspeeds.json'));
     myspeeds.push(result);
-    fs.writeFileSync('./wifimon/public/myspeeds.json', JSON.stringify(myspeeds));
+    fs.writeFileSync('./wifimon/build/myspeeds.json', JSON.stringify(myspeeds));
     console.log(result)
 
     fast().then(function(result){
-      let fastspeeds = JSON.parse(fs.readFileSync('./wifimon/public/fastspeeds.json'));
+      let fastspeeds = JSON.parse(fs.readFileSync('./wifimon/build/fastspeeds.json'));
       fastspeeds.push(result);
-      fs.writeFileSync('./wifimon/public/fastspeeds.json', JSON.stringify(fastspeeds));
+      fs.writeFileSync('./wifimon/build/fastspeeds.json', JSON.stringify(fastspeeds));
       console.log(result)
       speedTest().then(function(result){
-        let stspeeds = JSON.parse(fs.readFileSync('./wifimon/public/stspeeds.json'));
+        let stspeeds = JSON.parse(fs.readFileSync('./wifimon/build/stspeeds.json'));
         stspeeds.push(result);
-        fs.writeFileSync('./wifimon/public/stspeeds.json', JSON.stringify(stspeeds));
+        fs.writeFileSync('./wifimon/build/stspeeds.json', JSON.stringify(stspeeds));
         console.log(result)
       })
       .catch((err) => {

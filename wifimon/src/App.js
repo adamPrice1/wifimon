@@ -20,7 +20,7 @@ class App extends React.Component {
     };
 
      formatXAxis = (tickItem) =>{
-      return moment(tickItem).format("hh:mm");
+      return moment(tickItem).format("hh:mm a");
     }
 
      getFiles = (tickItem) =>{
