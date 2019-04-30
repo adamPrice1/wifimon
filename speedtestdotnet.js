@@ -26,19 +26,18 @@ module.exports = async function getSpeed(){
                 avgUpload += parseInt(speed.speeds.upload);
                 avgPing += parseInt(speed.ping);
               });
-              if (err) {
-                reject(err);
-              } else {
+
               resolve(JSON.parse(`{"download":"${avgDownload / speeds.length}","upload":"${avgUpload / speeds.length}","ping":"${avgPing / speeds.length}","time":"${moment().format()}"}`))
-            }
+
             })
           })
         })
       })
     })
-
-
   })
-
+  .catch(e => {
+    console.error(e.message);
+    }
+  );
 
 }

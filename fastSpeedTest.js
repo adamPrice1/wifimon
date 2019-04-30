@@ -28,16 +28,18 @@ module.exports = async function getSpeed(){
             speeds.push(s)
             avgDownload = 0
             speeds.forEach(function(speed){avgDownload += parseInt(speed);});
-            if (err) {
-              reject(err);
-            } else {
-            resolve(JSON.parse(`{"download": "${avgDownload / speeds.length}","time":"${moment().format()}"}`));
-          }
+
+            resolve(JSON.parse(`{"download": "${avgDownload / speeds.length}","time":"${moment().format()}"}`))
+
+
         })
           })
         })
       })
     })
   })
+  .catch((err) => {
+    console.log(err)
+  });
 
 }

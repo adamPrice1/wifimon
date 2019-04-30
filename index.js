@@ -31,7 +31,7 @@ function removeOldTime(fname){
 }
 
 app.listen(process.env.PORT || 8000, function() {
-  console.log("wifimon listeining on 8000");
+  console.log("wifimon listening on 8000");
 });
 
 schedule.scheduleJob('0 * * * *', function(){
@@ -40,6 +40,7 @@ schedule.scheduleJob('0 * * * *', function(){
     myspeeds.push(result);
     fs.writeFileSync('./wifimon/src/myspeeds.json', JSON.stringify(myspeeds));
     console.log(result)
+
     fast().then(function(result){
       let fastspeeds = JSON.parse(fs.readFileSync('./wifimon/src/fastspeeds.json'));
       fastspeeds.push(result);
@@ -51,8 +52,17 @@ schedule.scheduleJob('0 * * * *', function(){
         fs.writeFileSync('./wifimon/src/stspeeds.json', JSON.stringify(stspeeds));
         console.log(result)
       })
+      .catch((err) => {
+        console.log(err)
+      });
+    })
+    .catch((err) => {
+      console.log(err)
     });
   })
+  .catch((err) => {
+    console.log(err)
+  });
 
 });
 
