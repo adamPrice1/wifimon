@@ -27,6 +27,9 @@ module.exports = async function getSpeed(){
                 avgPing += parseInt(speed.ping);
               });
               resolve(JSON.parse(`{"download":"${avgDownload / speeds.length}","upload":"${avgUpload / speeds.length}","ping":"${avgPing / speeds.length}","time":"${moment().format()}"}`))
+              .catch(e => {
+                console.error(e.message);
+              });
             })
           })
         })
