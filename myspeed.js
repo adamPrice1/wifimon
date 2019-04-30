@@ -39,9 +39,7 @@ module.exports = async function getSpeed(){
                           reject(err);
                         } else {
                           resolve(JSON.parse(`{"upload":"${avgUp / speeds.length}","download":"${avgDown / speeds.length}","time":"${moment().format()}"}`))
-                          .catch(e => {
-                            console.error(e.message);
-                          });
+                          
                           }
 
                       })
