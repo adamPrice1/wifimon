@@ -9,7 +9,6 @@ import axios from 'axios'
 class App extends React.Component {
 
   state = {
-    fastSpeeds :[],
     mySpeeds :[],
     stSpeeds :[]
   }
@@ -25,12 +24,6 @@ class App extends React.Component {
 
      getFiles = (tickItem) =>{
 
-      axios.get('fastspeeds.json')
-        .then(response => {
-          this.setState({
-            fastSpeeds: response.data
-            })
-          })
 
       axios.get('myspeeds.json')
         .then(response => {
@@ -50,19 +43,6 @@ class App extends React.Component {
     render() {
   return (
     <div className="App">
-    <label> Fast speed test (netflix) </label>
-      <AreaChart width={1000} height={500} data={this.state.fastSpeeds}
-      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-      <XAxis dataKey="time"
-        name="date"
-        tickFormatter={this.formatXAxis}
-      />
-      <YAxis
-        name="Download(Mbps)"
-      />
-      <Tooltip />
-      <Area type="monotone" dataKey="download"  stroke="#8884d8" />
-      </AreaChart>
 
       <label> MySpeed library </label>
         <LineChart width={1000} height={500} data={this.state.mySpeeds}

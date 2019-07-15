@@ -41,11 +41,6 @@ schedule.scheduleJob('0 * * * *', function(){
     fs.writeFileSync('./wifimon/build/myspeeds.json', JSON.stringify(myspeeds));
     console.log(result)
 
-    fast().then(function(result){
-      let fastspeeds = JSON.parse(fs.readFileSync('./wifimon/build/fastspeeds.json'));
-      fastspeeds.push(result);
-      fs.writeFileSync('./wifimon/build/fastspeeds.json', JSON.stringify(fastspeeds));
-      console.log(result)
       speedTest().then(function(result){
         let stspeeds = JSON.parse(fs.readFileSync('./wifimon/build/stspeeds.json'));
         stspeeds.push(result);
@@ -59,12 +54,7 @@ schedule.scheduleJob('0 * * * *', function(){
     .catch((err) => {
       console.log(err)
     });
-  })
-  .catch((err) => {
-    console.log(err)
   });
-
-});
 
 schedule.scheduleJob('0 * * *', function(){
   removeOldTime("myspeeds.json");
